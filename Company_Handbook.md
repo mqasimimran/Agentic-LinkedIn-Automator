@@ -1,0 +1,1 @@
+Minimalist tone, all external actions require human move to /Approved, every task needs a Plan.md
