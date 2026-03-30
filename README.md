@@ -1,4 +1,4 @@
-# AgenticAI: Hardened LinkedIn Automator 🤖🚀
+# AgenticAI: LinkedIn Automator 🤖🚀
 
 A production-grade, state-aware LinkedIn automation agent built with **Node.js** and **Playwright**. This agent is designed to bypass modern web app defenses like dynamic React states, hidden DOM elements, and accessibility-based obfuscation.
 
