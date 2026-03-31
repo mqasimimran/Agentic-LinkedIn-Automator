@@ -27,4 +27,4 @@ Standard automation often fails on LinkedIn due to:
 3. Upon approval, the **LinkedIn Agent** takes over, handles the browser handshake, and publishes the post natively.
 
 ---
-*Developed as part of the AgenticAI Brand Revival Pipeline.*
+
