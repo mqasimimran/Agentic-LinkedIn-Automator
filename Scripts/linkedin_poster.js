@@ -23,7 +23,7 @@ async function postToLinkedIn(content, fileName, mediaFilePath) {
         const context = await browser.newContext();
         page = await context.newPage();
 
-        // --- STEP 1: LOGIN ---
+        //  LOGIN ---
         console.log('[Status] Navigating to LinkedIn...');
         await page.goto('https://www.linkedin.com/login');
         
@@ -40,16 +40,16 @@ async function postToLinkedIn(content, fileName, mediaFilePath) {
         console.log('[Status] Feed loaded. Waiting 5s...');
         await page.waitForTimeout(5000); 
 
-        // --- STEP 2: OPEN POST BOX ---
+        //  OPEN POST BOX ---
         console.log('[Status] Hunting for "Start a post"...');
         await page.getByText('Start a post', { exact: false }).first().click();
         
         console.log('[Status] Finding the text editor inside the dialog...');
-        // CRITICAL FIX: Lock onto the dialog, ignoring the top search bar
+       
         const editor = page.locator('div[role="dialog"] [contenteditable="true"]').first();
         await editor.waitFor({ state: 'visible', timeout: 15000 });
 
-        // --- STEP 3: MEDIA UPLOAD ---
+        // --- MEDIA UPLOAD ---
         if (mediaFilePath) {
             console.log('[Status] Attempting to upload media...');
             try {
@@ -81,14 +81,14 @@ async function postToLinkedIn(content, fileName, mediaFilePath) {
                     await page.locator('div[role="dialog"] button.artdeco-button--primary').last().click();
                 }
 
-                // Wait for the modal to slide away 
+                // Wait for the modal to slide 
                 await page.waitForTimeout(3000);
             } catch (e) {
                 console.log(`[Warning] Media upload skipped or failed: ${e.message}`);
             }
         }
 
-        // --- STEP 4: TYPE CONTENT (DIALOG LOCK FIX) ---
+        //  TYPE CONTENT  ---
         console.log('[Status] Finding the FRESH text editor inside the dialog...');
         // Re-grab the editor specifically inside the dialog to avoid the global search bar
         const freshEditor = page.locator('div[role="dialog"] [contenteditable="true"]').first();
@@ -103,14 +103,14 @@ async function postToLinkedIn(content, fileName, mediaFilePath) {
         await page.keyboard.press('Backspace');
         await page.waitForTimeout(2000); 
 
-        // --- STEP 5: SUBMIT ---
+        // -- SUBMIT ---
         console.log('[Status] Finding the exact "Post" button...');
         const postButton = page.getByRole('button', { name: 'Post', exact: true });
         
         console.log('[Status] Waiting for button to unlock and clicking...');
         await postButton.click({ timeout: 10000 });
 
-        // --- STEP 6: VERIFY ---
+        //  --VERIFY ---
         console.log('[Status] Waiting for the text editor to vanish (Upload in progress)...');
         await freshEditor.waitFor({ state: 'hidden', timeout: 30000 });
         
